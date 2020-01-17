@@ -2,8 +2,9 @@
 #include <dos.h>
 #include <iostream>
 #include <cmath>
-#include <stdio.h>
 using namespace std;
+
+#define pi 3.1415;
 
 class graph{
 	public:
@@ -69,40 +70,65 @@ void graph::headline() {
 
 int graph::draw(int n) {
     //Code for printing the graph of Trigonometric Functions
-    //red
-    int x, y;
+    int x, y, h, k;
     float pi=3.1415;
     for (int i=-360; i<=360; i++) {
             x = (int) 400+i;
             if(n==1) {
+                    setcolor(GREEN);
                     y = (int) 300-sin(i*pi/100)*35; //sin
-                    putpixel(x, y, GREEN); }
+                    h = (int) 400+(i+1); k = (int) 300-sin((i+1)*pi/100)*35;
+                    line(x, y, h, k); }
             else if(n==2) {
+                    setcolor(RED);
                     y = (int) 300-cos(i*pi/100)*35; //cos
-                    putpixel(x, y, RED); }
+                    h = (int) 400+(i+1); k = (int) 300-cos((i+1)*pi/100)*35;
+                    line(x, y, h, k); }
             else if(n==3) {
+                    setcolor(0);
                     y = (int) 300-tan(i*pi/100)*35; //tan
-                    putpixel(x, y, YELLOW); }
+                    line(x, y, x-1, y+4); }
             else if(n==4) {
+                    setcolor(GREEN);
                     y = (int) 300-(1/(sin(i*pi/100)*1/35)); // cosec
-                    putpixel(x, y, GREEN); }
+                    line(x, y, x-1, y+4); }
             else if(n==5) {
+                    setcolor(RED);
                     y = (int) 300-(1/(cos(i*pi/100)*1/35)); //sec
-                    putpixel(x, y, RED); }
+                    line(x, y, x-1, y+4); }
             else if(n==6) {
+                    setcolor(0);
                     y = (int) 300-(1/(tan(i*pi/100)*1/35)); //cot
-                    putpixel(x, y, YELLOW); }
-            delay(5);
+                    line(x, y, x-1, y+4); }
+            delay(10);
     }
     return 0;
 }
 
 void graph::axis() {
+
+    for(int i=0;i<600;i++){
+        setcolor(15);
+        setlinestyle(1, 5, 5);
+        line(0,i,getmaxx(),i);
+    }
+    for(int j=0;j<getmaxx();j+=20){
+        setcolor(0);
+        setlinestyle(1,0,1);
+        line(0,j,getmaxx(),j);
+        line(j,0,j,getmaxx());
+    }
+
     //code for generating x and y axis
+    setcolor(BLUE);
+    setlinestyle(0,0,2);
     line(60, 300, getmaxx()-72, 300); //x-axis
     line(400, 32, 400, getmaxy()-32); //y-axis
-    outtextxy(getmaxx()/2-2, 30, "Y");
-    outtextxy(getmaxx()-58, getmaxy()/2 - 5, "X");
-    outtextxy(396, getmaxy()-38, "Y'");
-    outtextxy(37, getmaxy()/2 - 5, "X'");
+    setcolor(BLACK);
+    setbkcolor(WHITE);
+    outtextxy((getmaxx()/2)-2, 30, "Y");
+    outtextxy(getmaxx()-58, (getmaxy()/2)-5, "X");
+    outtextxy(396, getmaxy()-38, "Y");
+    outtextxy(37, (getmaxy()/2)-5, "X");
+
 }
